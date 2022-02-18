@@ -56,6 +56,8 @@ function memo(x: number) {
 
             } else if ((Date.now() - cache.get(key).expired) / 1000 / 60 > x) {
                 console.log("from original1");
+                const originalMethodresult = await originalMethod.apply(this, args);
+                cache.set(key, { ...originalMethodresult, expired: Date.now() });
                 return originalMethod;
             } else {
                 console.log("from cach");
