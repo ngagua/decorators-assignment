@@ -52,13 +52,13 @@ function memo(x: number) {
                 const originalMethodresult = await originalMethod.apply(this, args);
                 cache.set(key, { ...originalMethodresult, expired: Date.now() });
                 console.log("from original");
-                return originalMethod;
+                return originalMethod.apply(this, args);
 
             } else if ((Date.now() - cache.get(key).expired) / 1000 / 60 > x) {
                 console.log("from original1");
                 const originalMethodresult = await originalMethod.apply(this, args);
                 cache.set(key, { ...originalMethodresult, expired: Date.now() });
-                return originalMethod;
+                return originalMethod.apply(this, args);
             } else {
                 console.log("from cach");
                 return cache.get(key);
